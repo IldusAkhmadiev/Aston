@@ -1,13 +1,22 @@
 package heroes;
 
-public class Hero {
+public abstract class Hero {
     private String name;
 
     public Hero(String name) {
         this.name = name;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void attackEnemy() {
-        System.out.println(name + " атакует врага");
+        System.out.println(this + " " + getName() + " атакует врага");
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName();
     }
 }
