@@ -33,39 +33,85 @@ public class BattleGround {
         enemies.add(enemy1);
         enemies.add(enemy2);
 
-
-        for (Hero hero : heroes) {
-            int i = new Random().nextInt(0, enemies.size());
-            hero.attackEnemy(enemies.get(i));
-            if (hero instanceof Mage)  {
-                if(hero.canUseAbility()) {
-                    hero.useAbility(heroes.get(i));
-                }
-            }else {
-                if(hero.canUseAbility()) {
-                    hero.useAbility(enemies.get(i));
-                }
-            }
-
-            if (enemies.get(i).isAlive()) {
-                System.out.println(enemies.get(i) + "  еще живой осталось хп :" + enemies.get(i).getHealth());
-            } else {
-                System.out.println("Умер " + enemies.get(i));
-                enemies.remove(enemies.get(i));
-            }
-        }
-        for (Enemy enemy3 : enemies) {
-            int i = new Random().nextInt(0, enemies.size());
-            enemy3.attackEnemy(heroes.get(i));
-            if(heroes.get(i).isAlive()) {
-                System.out.println(heroes.get(i) + "  еще живой осталось хп :" + heroes.get(i).getHealth());
-            } else  {
-                System.out.println(" Умер " + heroes.get(i));
-                heroes.remove(heroes.get(i));
-            }
-        }
-
+        battle(heroes, enemies);
 
     }
+
+    public static void battle (List<Hero> heroes,List<Enemy> enemies) {
+        while (heroes.size() > 0 || enemies.size() > 0) {
+            if(checkWinner(heroes,enemies,true)) {
+                break;
+            }
+            for (Hero hero : heroes) {
+                if(checkWinner(heroes,enemies,false)) {
+                    break;
+                }
+                int i = new Random().nextInt(0, enemies.size());
+                hero.attackEnemy(enemies.get(i));
+                if (hero instanceof Mage) {
+                    if (hero.canUseAbility()) {
+                        hero.useAbility(heroes.get(i));
+                    }
+                } else {
+                    if (hero.canUseAbility()) {
+                        hero.useAbility(enemies.get(i));
+                    }
+                }
+
+                if (enemies.get(i).isAlive()) {
+                    System.out.println(enemies.get(i) + "  еще живой осталось хп :" + enemies.get(i).getHealth());
+                } else {
+                    System.out.println("Умер " + enemies.get(i));
+                    enemies.remove(enemies.get(i));
+                }
+            }
+            for (Enemy enemy3 : enemies) {
+                if(checkWinner(heroes,enemies,false)) {
+                    break;
+                }
+                int i = new Random().nextInt(0, enemies.size());
+                enemy3.attackEnemy(heroes.get(i));
+                if (heroes.get(i).isAlive()) {
+                    System.out.println(heroes.get(i) + "  еще живой осталось хп :" + heroes.get(i).getHealth());
+                } else {
+                    System.out.println(" Умер " + heroes.get(i));
+                    heroes.remove(heroes.get(i));
+                }
+            }
+
+
+        }
+    }
+
+    private static boolean checkWinner(List<Hero> heroes,List<Enemy> enemies,boolean msg) {
+        if(enemies.isEmpty()) {
+            if(msg) {
+                System.out.println("---------------------------------------------");
+                System.out.println("---------------------------------------------");
+                System.out.println("Герои выиграли остались в живых : ");
+                for (Hero hero : heroes) {
+                    System.out.println(hero + " с " + hero.getHealth() + " хп");
+                }
+                System.out.println("---------------------------------------------");
+                System.out.println("---------------------------------------------");
+            }
+            return true;
+        }
+        if(heroes.isEmpty()) {
+            if(msg) {
+                System.out.println("---------------------------------------------");
+                System.out.println("---------------------------------------------");
+                System.out.println("Враги выиграли остались в живых : ");
+                for (Enemy enemy : enemies) {
+                    System.out.println(enemy + " с " + enemy.getHealth() + " хп");
+                }
+                System.out.println("---------------------------------------------");
+                System.out.println("---------------------------------------------");
+            }
+            return true;
+        }
+        return false;
+    }
+
 
 }
