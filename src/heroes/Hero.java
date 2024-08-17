@@ -11,15 +11,19 @@ public abstract class Hero {
         this.basicDamage = basicDamage;
     }
 
+    public int getBasicDamage() {
+        return basicDamage;
+    }
+
+    public void setBasicDamage(int basicDamage) {
+        this.basicDamage = basicDamage;
+    }
 
     public String getName() {
         return name;
     }
 
-    public void attackEnemy(Enemy enemy) {
-        enemy.takeDamage(basicDamage);
-        System.out.println(this + " " + getName() + " атакует врага");
-    }
+    public abstract void attackEnemy(Enemy enemy);
 
     @Override
     public String toString() {
