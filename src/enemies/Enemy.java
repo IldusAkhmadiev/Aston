@@ -1,14 +1,15 @@
 package enemies;
 
-import enemies.interfaces.Mortal;
+import interfaces.Mortal;
 import heroes.Hero;
 
 public class Enemy implements Mortal {
     private int health;
-    private Hero hero;
+    private int basicDamage;
 
-    public Enemy(int health) {
+    public Enemy(int health, int basicDamage) {
         this.health = health;
+        this.basicDamage = basicDamage;
     }
 
     public int getHealth() {
@@ -29,5 +30,15 @@ public class Enemy implements Mortal {
             return true;
         }
         return false;
+    }
+
+    public void attackEnemy(Hero hero) {
+        hero.takeDamage(basicDamage);
+        System.out.println(this + " атакует " + hero);
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName();
     }
 }

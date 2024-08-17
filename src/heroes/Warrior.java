@@ -14,4 +14,6 @@ public class Warrior extends Hero{
         enemy.takeDamage(getBasicDamage());
         System.out.println(this + " " + getName() + " атакует врага ");
     }
+
+
 }

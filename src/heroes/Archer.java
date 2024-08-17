@@ -14,4 +14,5 @@ public class Archer extends Hero{
         enemy.takeDamage(getBasicDamage());
         System.out.println(this + " " + getName() + " атакует врага");
     }
+
 }

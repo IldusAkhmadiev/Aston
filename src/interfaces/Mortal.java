@@ -1,5 +1,6 @@
-package enemies.interfaces;
+package interfaces;
 
 public interface Mortal {
     boolean isAlive();
+
 }
