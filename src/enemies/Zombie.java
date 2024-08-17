@@ -6,9 +6,9 @@ import units.Unit;
 
 import java.util.Random;
 
-public class Zombie extends EnemyWithAbility {
+public class Zombie extends Enemy {
     private int initHealth;  // используется когда зомби воскрешает
-    static int counter =0;
+    static int counter = 1;
 
     public Zombie(int health, int basicDamage, int procentSuccessAbility) {
         super(health, basicDamage, procentSuccessAbility);

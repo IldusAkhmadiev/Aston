@@ -1,10 +1,7 @@
 package heroes;
 
-import enemies.Enemy;
 import units.Hero;
 import units.Unit;
-
-import java.util.Random;
 
 public class Mage extends Hero {
 

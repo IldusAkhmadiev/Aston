@@ -51,11 +51,11 @@ public class DockerRunner {
     private static Enemy createEnemy(String enemyType) {
         Enemy enemy = null;
         if(enemyType.equalsIgnoreCase("Enemy")) {
-            enemy = new Enemy(50, 7);
+            enemy = new Enemy(50, 7,50);
         } else if (enemyType.equalsIgnoreCase("Zombie")) {
-            enemy =new Zombie(30,3,60);
+            enemy = new Zombie(30,3,50);
         } else {
-            enemy = new Troll(200,20,90);
+            enemy = new Troll(200,20,50);
         }
         return enemy;
     }

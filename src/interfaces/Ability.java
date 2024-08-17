@@ -24,5 +24,7 @@ public interface Ability {
 
 
     <T extends Unit> void useAbility(T unit);
+
+    abstract boolean canUseAbility();
 }
 

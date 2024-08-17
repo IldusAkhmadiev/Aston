@@ -22,9 +22,9 @@ public class BattleGround {
         Mage mage = new Mage(200, 20, "Gendalf",50);
         Warrior warrior = new Warrior(200, 25, "Arigon",50);
 
-        Enemy enemy = new Enemy(100, 15);
+        Enemy enemy = new Enemy(100, 15,50);
         Zombie enemy1 = new Zombie(50,10,50);
-        Troll enemy2 = new Troll(200,20,50);
+        Troll enemy2 = new Troll(200,20,90);
 
         heroes.add(legolas);
         heroes.add(warrior);
@@ -81,9 +81,12 @@ public class BattleGround {
                 }
                 int i = new Random().nextInt(0, enemies.size());
                 enemy3.attackEnemy(heroes.get(i));
+                if(enemy3.canUseAbility()) {
+                    enemy3.useAbility(heroes.get(i));
+                }
 
                 if (heroes.get(i).isAlive()) {
-                    System.out.println(heroes.get(i) + "  еще живой осталось хп :" + heroes.get(i).getHealth());
+                    System.out.println(heroes.get(i).getName() + "  еще живой осталось хп :" + heroes.get(i).getHealth());
                 } else {
                     System.out.println(" Умер " + heroes.get(i));
                     heroes.remove(heroes.get(i));
