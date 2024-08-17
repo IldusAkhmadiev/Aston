@@ -1,12 +1,13 @@
 package heroes;
 
 import enemies.Enemy;
+import units.Hero;
 
-public class Archer extends Hero{
+public class Archer extends Hero {
 
 
-    public Archer(String name, int basicDamage) {
-        super(name, basicDamage);
+    public Archer(int health, int basicDamage, String name) {
+        super(health, basicDamage, name);
     }
 
     @Override

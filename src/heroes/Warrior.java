@@ -1,12 +1,13 @@
 package heroes;
 
 import enemies.Enemy;
+import units.Hero;
 
-public class Warrior extends Hero{
+public class Warrior extends Hero {
 
 
-    public Warrior(String name, int basicDamage) {
-        super(name, basicDamage);
+    public Warrior(int health, int basicDamage, String name) {
+        super(health, basicDamage, name);
     }
 
     @Override

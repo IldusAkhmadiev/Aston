@@ -1,7 +1,6 @@
 package enemies;
 
-import interfaces.Mortal;
-import heroes.Hero;
+import units.Hero;
 import units.MortalUnit;
 
 public class Enemy extends MortalUnit {
@@ -10,13 +9,10 @@ public class Enemy extends MortalUnit {
         super(health, basicDamage);
     }
 
-    public void takeDamage(int damage) {
-        setHealth(getHealth() - damage);
-    }
-
-    public void attackEnemy(Hero hero) {
-        hero.takeDamage(getBasicDamage());
-        System.out.println(this + " атакует " + hero);
+    public <T extends Hero> void attackEnemy(T hero) {
+        hero.takeDamage(getBasicDamage()); // Герой получает урон
+        System.out.println(String.format("%s атакует %s, нанесено %d урона у %s осталось %d жизни",
+                this, hero.getName(), getBasicDamage(), hero.getName(), hero.getHealth()));
     }
 
 }

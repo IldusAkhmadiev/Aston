@@ -5,6 +5,11 @@ import heroes.Archer;
 
 public class BattleGround {
     public static void main(String[] args) {
-        new Archer("Legolas",10).attackEnemy(new Enemy(100,10));
+        Archer legolas = new Archer(100, 10, "Legolas");
+
+        Enemy enemy = new Enemy(100, 10);
+        legolas.attackEnemy(enemy);
+        enemy.attackEnemy(legolas);
+
     }
 }

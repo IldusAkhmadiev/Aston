@@ -1,8 +1,6 @@
-package heroes;
+package units;
 
 import enemies.Enemy;
-import interfaces.Mortal;
-import units.MortalUnit;
 
 public abstract class Hero extends MortalUnit {
     private String name;
@@ -16,11 +14,7 @@ public abstract class Hero extends MortalUnit {
         return name;
     }
 
-    public abstract void attackEnemy(Enemy enemy);
-
-    public void takeDamage(int damage) {
-        setHealth(getHealth() -damage);
-    }
+    public abstract <T extends Enemy> void attackEnemy(T enemy);
 
 
 }
