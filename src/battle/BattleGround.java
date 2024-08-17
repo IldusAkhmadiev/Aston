@@ -24,7 +24,7 @@ public class BattleGround {
 
         Enemy enemy = new Enemy(100, 15,50);
         Zombie enemy1 = new Zombie(50,10,50);
-        Troll enemy2 = new Troll(200,20,90);
+        Troll enemy2 = new Troll(200,20,0);
 
         heroes.add(legolas);
         heroes.add(warrior);
