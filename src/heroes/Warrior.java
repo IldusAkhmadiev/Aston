@@ -12,6 +12,6 @@ public class Warrior extends Hero{
     @Override
     public void attackEnemy(Enemy enemy) {
         enemy.takeDamage(getBasicDamage());
-        System.out.println(this + " " + getName() + " атакует врага");
+        System.out.println(this + " " + getName() + " атакует врага ");
     }
 }
