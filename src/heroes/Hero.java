@@ -2,23 +2,14 @@ package heroes;
 
 import enemies.Enemy;
 import interfaces.Mortal;
+import units.MortalUnit;
 
-public abstract class Hero implements Mortal {
+public abstract class Hero extends MortalUnit {
     private String name;
-    private int basicDamage;
-    private int health;
 
-    public Hero(String name, int basicDamage) {
+    public Hero(int health, int basicDamage, String name) {
+        super(health, basicDamage);
         this.name = name;
-        this.basicDamage = basicDamage;
-    }
-
-    public int getBasicDamage() {
-        return basicDamage;
-    }
-
-    public void setBasicDamage(int basicDamage) {
-        this.basicDamage = basicDamage;
     }
 
     public String getName() {
@@ -27,21 +18,8 @@ public abstract class Hero implements Mortal {
 
     public abstract void attackEnemy(Enemy enemy);
 
-    @Override
-    public String toString() {
-        return getClass().getSimpleName();
-    }
-
-    @Override
-    public boolean isAlive() {
-        if (health > 0) {
-            return true;
-        }
-        return false;
-    }
-
     public void takeDamage(int damage) {
-        health -= damage;
+        setHealth(getHealth() -damage);
     }
 
 
