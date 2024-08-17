@@ -28,6 +28,6 @@ public class Zombie extends EnemyWithAbility {
 
     @Override
     public <T extends Unit> void useAbility(T unit) {
-        System.out.println("Зомби " + unit + " воскрешает");
+        System.out.println("Зомби " + unit + " пытается воскреситься");
     }
 }

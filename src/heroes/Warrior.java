@@ -2,6 +2,7 @@ package heroes;
 
 import enemies.Enemy;
 import units.Hero;
+import units.Unit;
 
 public class Warrior extends Hero {
 
@@ -11,10 +12,7 @@ public class Warrior extends Hero {
     }
 
     @Override
-    public void attackEnemy(Enemy enemy) {
-        enemy.takeDamage(getBasicDamage());
-        System.out.println(this + " " + getName() + " атакует врага ");
+    public <T extends Unit> void useAbility(T unit) {
+        unit.setHealth(unit.getHealth() - getBasicDamage() * 3);
     }
-
-
 }
