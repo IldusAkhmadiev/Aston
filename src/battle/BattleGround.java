@@ -35,6 +35,7 @@ public class BattleGround {
 
         battle(heroes, enemies);
 
+      //  DockerRunner.main(new String[]{"--heroType", "Archer", "--enemyType", "Troll"});
     }
 
     public static void battle (List<Hero> heroes,List<Enemy> enemies) {
