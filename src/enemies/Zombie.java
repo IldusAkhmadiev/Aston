@@ -22,7 +22,6 @@ public class Zombie extends EnemyWithAbility {
                 useAbility(this);
             }
         }
-        System.out.println("Зомби умер окончательно");
         return false;
     }
 

@@ -22,6 +22,7 @@ public interface Ability {
        return false;
    }
 
+
     <T extends Unit> void useAbility(T unit);
 }
 
