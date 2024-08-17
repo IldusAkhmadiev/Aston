@@ -1,6 +1,6 @@
 Запускать можно и через DOCKER доступные версии
 
-                DOCKER RUN ildusakhmadiev/aston:lesson4 
+                DOCKER RUN ildusakhmadiev/aston:lesson4v1 
 
                 Не поддерживает передачу параметров
               
