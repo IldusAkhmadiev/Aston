@@ -14,7 +14,6 @@ public abstract class EnemyWithAbility extends Enemy implements Ability {
     }
 
 
-
     public int getProcentSuccessAbility() {
         return procentSuccessAbility;
     }
@@ -22,4 +21,6 @@ public abstract class EnemyWithAbility extends Enemy implements Ability {
     public void setProcentSuccessAbility(int procentSuccessAbility) {
         this.procentSuccessAbility = procentSuccessAbility;
     }
+
+
 }

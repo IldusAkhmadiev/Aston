@@ -18,13 +18,13 @@ public class BattleGround {
         List<Enemy> enemies = new ArrayList<>();
         List<Hero> heroes = new ArrayList<>();
 
-        Archer legolas = new Archer(200, 15, "Legolas",40);
-        Mage mage = new Mage(200, 20, "Gendalf",1);
-        Warrior warrior = new Warrior(200, 25, "Arigon",20);
+        Archer legolas = new Archer(200, 15, "Legolas",50);
+        Mage mage = new Mage(200, 20, "Gendalf",50);
+        Warrior warrior = new Warrior(200, 25, "Arigon",50);
 
-        Enemy enemy = new Enemy(50, 7);
-        Zombie enemy1 = new Zombie(30,3,60);
-        Troll enemy2 = new Troll(200,20,90);
+        Enemy enemy = new Enemy(100, 15);
+        Zombie enemy1 = new Zombie(50,10,50);
+        Troll enemy2 = new Troll(200,20,50);
 
         heroes.add(legolas);
         heroes.add(warrior);
@@ -44,7 +44,7 @@ public class BattleGround {
                 break;
             }
             for (Hero hero : heroes) {
-                if(checkWinner(heroes,enemies,false)) {
+                if (checkWinner(heroes, enemies, false)) {
                     break;
                 }
                 int i = new Random().nextInt(0, enemies.size());
@@ -58,12 +58,21 @@ public class BattleGround {
                         hero.useAbility(enemies.get(i));
                     }
                 }
-
-                if (enemies.get(i).isAlive()) {
-                    System.out.println(enemies.get(i) + "  еще живой осталось хп :" + enemies.get(i).getHealth());
+                Enemy enemy = enemies.get(i);
+                if (enemy.isAlive()) {
+                    System.out.println(enemy + "  еще живой осталось хп :" + enemy.getHealth());
                 } else {
-                    System.out.println("Умер " + enemies.get(i));
-                    enemies.remove(enemies.get(i));
+                    if (enemy instanceof Zombie) {
+                        if (((Zombie) enemy).canUseAbility()) {
+                            ((Zombie) enemy).useAbility(enemy);
+                        } else {
+                            System.out.println(enemy + " умер.");
+                            enemies.remove(enemies.get(i));
+                        }
+                    } else {
+                        System.out.println(enemy + " умер.");
+                        enemies.remove(enemies.get(i));
+                    }
                 }
             }
             for (Enemy enemy3 : enemies) {
@@ -72,6 +81,7 @@ public class BattleGround {
                 }
                 int i = new Random().nextInt(0, enemies.size());
                 enemy3.attackEnemy(heroes.get(i));
+
                 if (heroes.get(i).isAlive()) {
                     System.out.println(heroes.get(i) + "  еще живой осталось хп :" + heroes.get(i).getHealth());
                 } else {
@@ -79,11 +89,9 @@ public class BattleGround {
                     heroes.remove(heroes.get(i));
                 }
             }
-
-
         }
-    }
 
+    }
     private static boolean checkWinner(List<Hero> heroes,List<Enemy> enemies,boolean msg) {
         if(enemies.isEmpty()) {
             if(msg) {
@@ -113,6 +121,9 @@ public class BattleGround {
         }
         return false;
     }
+    }
 
 
-}
+
+
+

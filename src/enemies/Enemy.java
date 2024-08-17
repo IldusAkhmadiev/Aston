@@ -3,6 +3,8 @@ package enemies;
 import units.Hero;
 import units.MortalUnit;
 
+import java.util.Random;
+
 public class Enemy extends MortalUnit {
 
     public Enemy(int health, int basicDamage) {
@@ -14,5 +16,6 @@ public class Enemy extends MortalUnit {
         System.out.println(String.format("%s атакует %s, нанесено %d урона у %s осталось %d жизни",
                 this, hero.getName(), getBasicDamage(), hero.getName(), hero.getHealth()));
     }
+
 
 }
