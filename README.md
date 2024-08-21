@@ -1,11 +1,11 @@
 Запускать можно и через DOCKER доступные версии
 
-                DOCKER RUN ildusakhmadiev/aston:lesson4v1 
+                docker run ildusakhmadiev/aston:lesson4v1 
 
                 Не поддерживает передачу параметров
               
                  
-                DOCKER RUN  ildusakhmadiev/aston:latest
+                docker run  ildusakhmadiev/aston:latest
  
                 Поддерживает передачу 2 параметров	
    
