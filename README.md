@@ -10,7 +10,7 @@
 
 لإ
 
-Запускать можно и через DOCKER доступные версии
+Если не получилось запускать можно и через DOCKER доступные версии
 
                 docker run ildusakhmadiev/aston:lesson4v1 
 
