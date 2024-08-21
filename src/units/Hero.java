@@ -3,7 +3,7 @@ package units;
 import enemies.Enemy;
 import interfaces.Ability;
 
-public abstract class Hero extends MortalUnit implements Ability {
+public abstract class Hero extends MortalUnitWithAbility {
     private String name;
 
     public Hero(int health, int basicDamage,String name, int procentSuccessAbility) {
