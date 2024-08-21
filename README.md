@@ -4,7 +4,8 @@
  
 		Указать Java версию (поддерживает любую версию с 8 до 22) 
   		и проект как показано на скриншоте
-![image](https://github.com/user-attachments/assets/8ad3575a-9aad-490b-8693-961bd617475d)
+![image](https://github.com/user-attachments/assets/57a8c132-53b7-4cd5-9aaf-76a8135f2719)
+
 
 
 لإ
