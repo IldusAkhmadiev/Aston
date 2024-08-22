@@ -1,4 +1,16 @@
-Запускать можно и через DOCKER доступные версии
+	Добавлен Maven для JUnit5 
+ 
+	Если при запуске метода main в BattleGround выходит окошко 
+ 
+		Указать Java версию (поддерживает любую версию с 8 до 22) 
+  		и проект как показано на скриншоте
+![image](https://github.com/user-attachments/assets/57a8c132-53b7-4cd5-9aaf-76a8135f2719)
+
+
+
+لإ
+
+Если не получилось запускать можно и через DOCKER доступные версии
 
                 docker run ildusakhmadiev/aston:lesson4v1 
 
