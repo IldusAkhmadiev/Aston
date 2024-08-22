@@ -24,6 +24,9 @@ public abstract class MortalUnitWithAbility extends MortalUnit implements Abilit
     }
 
     public boolean canUseAbility() {
+        if(getProcentSuccessAbility() == 0) {
+            return false;
+        }
         int i = new Random().nextInt(1,101);
         if (i <= getProcentSuccessAbility()) {  // удачно способность можно применить
             return true;

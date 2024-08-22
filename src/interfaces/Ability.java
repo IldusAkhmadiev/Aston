@@ -11,7 +11,10 @@ public interface Ability {
      *  При передаче некорректного числа автоматически генерируется случайный %
      * **/
     default boolean canUseAbility(int percentSuccess) {
-       final int PERCENT = (percentSuccess <= 1 || percentSuccess >= 100)
+        if(percentSuccess == 0) {
+            return false;
+        }
+       final int PERCENT = (percentSuccess <= 0  || percentSuccess >= 101)
                ? new Random().nextInt(1,101)
                : percentSuccess ;
 
