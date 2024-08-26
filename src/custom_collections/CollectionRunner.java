@@ -15,12 +15,12 @@ public class CollectionRunner {
         list1.sortThread();
         long endTime = System.nanoTime();
         NumericArrayList<Integer> list2 = new NumericArrayList<>(array);
-        System.out.println("Мультипотоковая сортировка: " + ( (endTime - startTime) / 1_000_000) + " ms");
+        System.out.println("Мультипотоковая сортировка: " + ( (endTime - startTime) / 1_000_000) +  " миллисекунд");
 
         startTime = System.nanoTime();
         NumericArrayList.sort(list2);
         endTime = System.nanoTime();
-        System.out.println("Обычная сортировка : " + ( (endTime - startTime) / 1_000_000) + " ms");
+        System.out.println("Обычная сортировка пузырьком : " + ( (endTime - startTime) / 1_000_000) +  " миллисекунд");
         FileUtil.deleteFile();
 
     }

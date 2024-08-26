@@ -49,8 +49,8 @@ public class PerformanceTest {
         double avgTimeWithStreams = totalTimeWith / (double) testIterCount / 1_000_000.0;
         double avgTimeWithoutStreams = totalTimeWithout / (double) testIterCount / 1_000_000.0;
 
-        System.out.println("Время выполнения с многопоточностью " + avgTimeWithStreams);
-        System.out.println("Время выполнения без многопоточности " + avgTimeWithoutStreams);
+        System.out.println("Время выполнения с многопоточностью " + avgTimeWithStreams + " миллисекунд");
+        System.out.println("Время выполнения без многопоточности " + avgTimeWithoutStreams + " миллисекунд");
         System.out.println("Максимальное число с многопоточностью " + list.max(true).get());
         System.out.println("Максимальное число без многопоточности " + list.max(false).get());
 
