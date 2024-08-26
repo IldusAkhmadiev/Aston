@@ -2,6 +2,9 @@ package custom_collections;
 
 import java.lang.reflect.Array;
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class NumericArrayList<T extends Number & Comparable<T>> implements CRUDCollection<T> {
 
@@ -144,6 +147,98 @@ public class NumericArrayList<T extends Number & Comparable<T>> implements CRUDC
         } else {
             Optional<T> min = Arrays.stream(data).min(Comparator.naturalOrder());
             return min;
+        }
+
+    }
+
+    // пока работает только с Integer
+    public NumericArrayList<Integer> sortThread() {
+        ExecutorService executor = Executors.newCachedThreadPool();
+
+        ArrayList<Integer> integers1 = new ArrayList<>();
+        ArrayList<Integer> integers2 = new ArrayList<>();
+        ArrayList<Integer> integers3 = new ArrayList<>();
+        ArrayList<Integer> integers4 = new ArrayList<>();
+        ArrayList<Integer> integers5 = new ArrayList<>();
+        ArrayList<Integer> integers6 = new ArrayList<>();
+        ArrayList<Integer> integers7 = new ArrayList<>();
+        ArrayList<Integer> integers8 = new ArrayList<>();
+        ArrayList<Integer> integers9 = new ArrayList<>();
+        ArrayList<Integer> integers10 = new ArrayList<>();
+
+        int[][] ranges = {
+                {0, 9},
+                {10, 99},
+                {100, 999},
+                {1000, 9999},
+                {10000, 99999},
+                {100000, 999999},
+                {1000000, 9999999},
+                {10000000, 99999999},
+                {100000000, 999999999},
+                {1000000000, 2_147_483_647}
+        };
+
+        // Передача задачи в потоки
+        executor.submit(() -> { processRange(ranges[0], integers1,data);
+        integers1.sort(Comparator.naturalOrder());});
+
+        executor.submit(() -> { processRange(ranges[1], integers2,data);
+            integers2.sort(Comparator.naturalOrder());});
+
+        executor.submit(() -> { processRange(ranges[2], integers3,data);
+            integers3.sort(Comparator.naturalOrder());});
+
+        executor.submit(() -> { processRange(ranges[3], integers4,data);
+            integers4.sort(Comparator.naturalOrder());});
+
+        executor.submit(() -> { processRange(ranges[4], integers5,data);
+            integers5.sort(Comparator.naturalOrder());});
+
+        executor.submit(() -> { processRange(ranges[5], integers6,data);
+            integers6.sort(Comparator.naturalOrder());});
+
+        executor.submit(() -> { processRange(ranges[6], integers7,data);
+            integers7.sort(Comparator.naturalOrder());});
+
+        executor.submit(() -> { processRange(ranges[7], integers8,data);
+            integers8.sort(Comparator.naturalOrder());});
+
+        executor.submit(() -> { processRange(ranges[8], integers9,data);
+            integers9.sort(Comparator.naturalOrder());});
+
+        executor.submit(() -> { processRange(ranges[9], integers10,data);
+            integers10.sort(Comparator.naturalOrder());});
+
+        executor.shutdown();
+
+        //ConcurrentModificationException
+        //Поток может завершиться раньше и приступить к работе по объединению этот код исправляет это
+        try {
+            // Ожидание завершения всех задач
+            executor.awaitTermination(60, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        NumericArrayList list = new NumericArrayList(integers1);
+        list.addAll(integers2);
+        list.addAll(integers3);
+        list.addAll(integers4);
+        list.addAll(integers5);
+        list.addAll(integers6);
+        list.addAll(integers7);
+        list.addAll(integers8);
+        list.addAll(integers9);
+        list.addAll(integers10);
+        return list;
+    }
+
+    private void processRange(int[] range, ArrayList<Integer> list,T[] source) {
+        for (int i = 0; i < currentSize; i++) {
+            if(source[i].intValue() > range[0] && source[i].intValue() <= range[1]) {
+                list.add(source[i].intValue());
+            }
         }
 
     }

@@ -7,6 +7,7 @@ import java.util.Optional;
 
 public class PerformanceTest {
     private static int iterCountJVM = 10;
+    // показывает сколько раз выполнить тест
     private static int testIterCount = 10;
 
     public static void main(String[] args) {
@@ -29,7 +30,7 @@ public class PerformanceTest {
             System.gc();
 
             long startTime = System.nanoTime();
-            Optional<Integer> min = list.min(true);
+            Optional<Integer> max = list.max(true);
             long endTime = System.nanoTime();
             totalTimeWith += (endTime - startTime);
 
@@ -37,7 +38,7 @@ public class PerformanceTest {
 
 
             startTime = System.nanoTime();
-            Optional<Integer> minNo = list.min(false);
+            Optional<Integer> maxNo = list.max(false);
             endTime = System.nanoTime();
             totalTimeWithout += (endTime - startTime);
 
@@ -50,8 +51,8 @@ public class PerformanceTest {
 
         System.out.println("Время выполнения с многопоточностью " + avgTimeWithStreams);
         System.out.println("Время выполнения без многопоточности " + avgTimeWithoutStreams);
-        System.out.println("Максимальное число с многопоточностью " + list.min(true).get());
-        System.out.println("Максимальное число без многопоточности " + list.min(false).get());
+        System.out.println("Максимальное число с многопоточностью " + list.max(true).get());
+        System.out.println("Максимальное число без многопоточности " + list.max(false).get());
 
         FileUtil.deleteFile();
     }
