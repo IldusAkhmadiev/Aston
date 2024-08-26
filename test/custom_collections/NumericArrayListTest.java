@@ -22,7 +22,7 @@ class NumericArrayListTest {
     void add() {
         NumericArrayList n1 = new NumericArrayList(new Integer[]{1,2,3,4,5,8,10});
         n1.add(10000);
-
+        assertEquals(10000, n1.get(n1.getSize()-1));
     }
 
     @Test
@@ -31,5 +31,12 @@ class NumericArrayListTest {
 
     @Test
     void get() {
+        NumericArrayList<Integer> n1 = new NumericArrayList<>(new Integer[]{12,22,33,44,55,8,10});
+        Integer i = n1.get(0);
+        assertEquals(12,i);
+        Integer i2 = n1.get(-233);
+        assertEquals(12,i2);
+        Integer i3 = n1.get(99999);
+        assertEquals(10,i3);
     }
 }

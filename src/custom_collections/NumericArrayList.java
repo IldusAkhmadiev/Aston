@@ -1,7 +1,6 @@
 package custom_collections;
 
-import java.util.ArrayList;
-import java.util.Objects;
+import java.util.Optional;
 
 public class NumericArrayList<T extends Number> implements CRUDCollection<T> {
 
@@ -17,9 +16,10 @@ public class NumericArrayList<T extends Number> implements CRUDCollection<T> {
     @Override
     public void add(T o) {
         if (CollectionUtil.isFull(data)) {
-            T[] newData = (T[]) new Object[data.length * multiplier];
+            T[] newData = (T[]) new Number[data.length * multiplier];
             System.arraycopy(data, 0, newData, 0, data.length);
             data = newData;
+            data[size++] = o;
         } else {
             data[size] = o;
             size++;
@@ -33,9 +33,22 @@ public class NumericArrayList<T extends Number> implements CRUDCollection<T> {
 
     }
 
+    /**
+     * Возвращает по индексу если индекс выходит зза пределы массива возвращает последний элемент
+     * Если передать отрицательное число то вернет 1 элемент
+     */
     @Override
-    public Object get(int index) {
-        return null;
+    public T get(int index) {
+        if(index < 0) {
+            return data[0];
+        } else if (index >= size) {
+            return data[size - 1];
+        } else {
+            return data[index];
+        }
+
+
+
     }
 
     public int getSize() {
