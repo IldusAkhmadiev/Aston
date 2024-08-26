@@ -9,5 +9,8 @@ public class CollectionRunner {
         integers[0] = 1;
         integers[1] = 2;
         System.out.println(integers[integers.length - 3]);
+        System.out.println(Integer.toString(-333).length());
+        Integer.toString(Math.abs(333)).length();
+        
     }
 }

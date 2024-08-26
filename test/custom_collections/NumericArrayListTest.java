@@ -2,6 +2,8 @@ package custom_collections;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class NumericArrayListTest {
@@ -22,11 +24,14 @@ class NumericArrayListTest {
     void add() {
         NumericArrayList n1 = new NumericArrayList(new Integer[]{1,2,3,4,5,8,10});
         n1.add(10000);
-        assertEquals(10000, n1.get(n1.getSize()-1));
+        assertEquals(10000, n1.get(n1.size()-1));
     }
 
     @Test
     void remove() {
+        NumericArrayList<Integer> n1 = new NumericArrayList<>(new Integer[]{12,22,33,44,55,8,10});
+        n1.remove(1); // 22
+        assertEquals(6, n1.size());
     }
 
     @Test
@@ -44,5 +49,22 @@ class NumericArrayListTest {
     void createAsClazz() {
         NumericArrayList numericArrayList = new NumericArrayList(Integer.class);
         assertTrue(numericArrayList != null);
+    }
+
+    @Test
+    void addAll() {
+        NumericArrayList<Integer> n1 = new NumericArrayList(new Integer[]{1,2,3,4,5,8,10});
+        ArrayList<Integer> integers = new ArrayList<Integer>();
+        integers.add(111);
+        integers.add(222);
+        integers.add(333);
+        n1.addAll(integers);
+        assertEquals(10, n1.size());
+    }
+
+    @Test
+    void size() {
+        NumericArrayList<Integer> n1 = new NumericArrayList(new Integer[]{1,2,3,4,5,8,10});
+        assertEquals(7, n1.size());
     }
 }
