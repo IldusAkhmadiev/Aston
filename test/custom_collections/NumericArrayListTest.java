@@ -39,4 +39,10 @@ class NumericArrayListTest {
         Integer i3 = n1.get(99999);
         assertEquals(10,i3);
     }
+
+    @Test
+    void createAsClazz() {
+        NumericArrayList numericArrayList = new NumericArrayList(Integer.class);
+        assertTrue(numericArrayList != null);
+    }
 }

@@ -1,16 +1,23 @@
 package custom_collections;
 
+import java.lang.reflect.Array;
 import java.util.Optional;
 
 public class NumericArrayList<T extends Number> implements CRUDCollection<T> {
 
-    private int size = 10;
+    private int currentSize;
+    private int basicSize = 10;
     private T[] data;
     private int multiplier = 2;
 
     public NumericArrayList(T[] data) {
         this.data = data;
-        this.size = data.length;
+        this.currentSize = data.length;
+    }
+
+    public NumericArrayList(Class<T> clazz  ) {
+        this.data = (T[]) Array.newInstance(clazz, basicSize);
+
     }
 
     @Override
@@ -19,10 +26,10 @@ public class NumericArrayList<T extends Number> implements CRUDCollection<T> {
             T[] newData = (T[]) new Number[data.length * multiplier];
             System.arraycopy(data, 0, newData, 0, data.length);
             data = newData;
-            data[size++] = o;
+            data[currentSize++] = o;
         } else {
-            data[size] = o;
-            size++;
+            data[currentSize] = o;
+            currentSize++;
         }
 
 
@@ -41,8 +48,8 @@ public class NumericArrayList<T extends Number> implements CRUDCollection<T> {
     public T get(int index) {
         if(index < 0) {
             return data[0];
-        } else if (index >= size) {
-            return data[size - 1];
+        } else if (index >= currentSize) {
+            return data[currentSize - 1];
         } else {
             return data[index];
         }
@@ -52,6 +59,6 @@ public class NumericArrayList<T extends Number> implements CRUDCollection<T> {
     }
 
     public int getSize() {
-        return size;
+        return currentSize;
     }
 }
