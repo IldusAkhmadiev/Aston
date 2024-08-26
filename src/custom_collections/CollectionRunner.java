@@ -12,7 +12,7 @@ public class CollectionRunner {
         Integer[] array = FileUtil.getArray();
         NumericArrayList<Integer> list1 = new NumericArrayList<>(array);
         long startTime = System.nanoTime();
-        list1.sortThread();
+        list1.sortPositiveThread();
         long endTime = System.nanoTime();
         NumericArrayList<Integer> list2 = new NumericArrayList<>(array);
         System.out.println("Мультипотоковая сортировка: " + ( (endTime - startTime) / 1_000_000) +  " миллисекунд");

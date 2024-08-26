@@ -152,8 +152,11 @@ public class NumericArrayList<T extends Number & Comparable<T>> implements CRUDC
     }
 
     // пока работает только с Integer
-    public NumericArrayList<Integer> sortThread() {
+    // да пока он работает только с Integer и не разделяет минусовые значения .
+    // то есть после сортировки пока что у вас пропадут все числа которые имеют отрицательное значение
+    public NumericArrayList<Integer> sortPositiveThread() {
         ExecutorService executor = Executors.newCachedThreadPool();
+
 
         ArrayList<Integer> integers1 = new ArrayList<>();
         ArrayList<Integer> integers2 = new ArrayList<>();
