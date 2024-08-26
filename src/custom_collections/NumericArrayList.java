@@ -209,9 +209,7 @@ public class NumericArrayList<T extends Number & Comparable<T>> implements CRUDC
 
         executor.submit(() -> { processRange(ranges[9], integers10,data);
             integers10.sort(Comparator.naturalOrder());});
-
         executor.shutdown();
-
         //ConcurrentModificationException
         //Поток может завершиться раньше и приступить к работе по объединению этот код исправляет это
         try {
