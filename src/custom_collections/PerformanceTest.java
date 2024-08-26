@@ -11,7 +11,7 @@ public class PerformanceTest {
 
     public static void main(String[] args) {
         // мой комп не смог выдержать больше 30 млн цифр . 8 гб оперативка
-        FileUtil.createFile("temp", 1000000);
+        FileUtil.createFile("temp", 10000000);
         Integer[] arrays = FileUtil.getArray();
         NumericArrayList<Integer> list = new NumericArrayList<>(arrays);
 
@@ -29,7 +29,7 @@ public class PerformanceTest {
             System.gc();
 
             long startTime = System.nanoTime();
-            Optional<Integer> max = list.max(true);
+            Optional<Integer> min = list.min(true);
             long endTime = System.nanoTime();
             totalTimeWith += (endTime - startTime);
 
@@ -37,7 +37,7 @@ public class PerformanceTest {
 
 
             startTime = System.nanoTime();
-            Optional<Integer> maxNo = list.max(false);
+            Optional<Integer> minNo = list.min(false);
             endTime = System.nanoTime();
             totalTimeWithout += (endTime - startTime);
 
@@ -50,9 +50,11 @@ public class PerformanceTest {
 
         System.out.println("Время выполнения с многопоточностью " + avgTimeWithStreams);
         System.out.println("Время выполнения без многопоточности " + avgTimeWithoutStreams);
-        System.out.println("Максимальное число с многопоточностью " + list.max(true).get());
-        System.out.println("Максимальное число без многопоточности " + list.max(false).get());
+        System.out.println("Максимальное число с многопоточностью " + list.min(true).get());
+        System.out.println("Максимальное число без многопоточности " + list.min(false).get());
 
         FileUtil.deleteFile();
     }
+
+
 }
