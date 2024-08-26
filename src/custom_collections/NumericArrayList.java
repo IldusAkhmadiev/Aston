@@ -1,8 +1,7 @@
 package custom_collections;
 
 import java.lang.reflect.Array;
-import java.util.Collection;
-import java.util.Iterator;
+import java.util.*;
 
 public class NumericArrayList<T extends Number> implements CRUDCollection<T> {
 
@@ -11,14 +10,20 @@ public class NumericArrayList<T extends Number> implements CRUDCollection<T> {
     private int basicSize = 10;
     private T[] data;
     private int multiplier = 2;
+    private String classType;
 
     public NumericArrayList(T[] data) {
         this.data = data;
         this.currentSize = data.length;
+        if(data.length > 0) {
+            Class<?> clazz = data.getClass();
+            this.classType = clazz.getSimpleName();
+        }
     }
 
     public NumericArrayList(Class<T> clazz  ) {
         this.data = (T[]) Array.newInstance(clazz, basicSize);
+        this.classType = clazz.getSimpleName();
 
     }
 
@@ -26,6 +31,7 @@ public class NumericArrayList<T extends Number> implements CRUDCollection<T> {
         this.currentSize = c.size();
         if (currentSize > 0) {
             Class<?> clazz = c.iterator().next().getClass();
+            this.classType = clazz.getSimpleName();
             this.data = (T[]) Array.newInstance(clazz, currentSize);
             int i = 0;
             for (T element : c) {
@@ -35,8 +41,6 @@ public class NumericArrayList<T extends Number> implements CRUDCollection<T> {
             this.data = (T[]) new Number[basicSize];
         }
     }
-
-
 
     @Override
     public void add(T o) {
@@ -67,7 +71,6 @@ public class NumericArrayList<T extends Number> implements CRUDCollection<T> {
             }
         }
     }
-
 
     /**
      * Возвращает по индексу если индекс выходит зза пределы массива возвращает последний элемент
@@ -104,4 +107,27 @@ public class NumericArrayList<T extends Number> implements CRUDCollection<T> {
     public int size() {
         return currentSize;
     }
+
+    public static void sort(NumericArrayList list) {
+        boolean wasSwap = true;
+        while (wasSwap) {
+            wasSwap = false;
+            for (int i = 0; i < list.size() - 1; i++) { // последний элемент мы будем сравнивать поэтому по нему не итерируемся
+                if (list.data[i].doubleValue() > list.data[i + 1].doubleValue()) {
+                    Number datum = list.data[i];
+                    list.data[i] = list.data[i + 1];
+                    list.data[i + 1] = datum;
+                    wasSwap = true;
+                }
+                }
+
+            }
+        }
+
+    public T[] getArray() {
+        return data;
+    }
+
 }
+
+

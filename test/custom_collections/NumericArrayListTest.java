@@ -3,6 +3,7 @@ package custom_collections;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -76,5 +77,13 @@ class NumericArrayListTest {
         integers.add(333);
         NumericArrayList<Integer> n1 = new NumericArrayList<>(integers);
         assertEquals(3, n1.size());
+    }
+
+    @Test
+    void  sort() {
+        NumericArrayList<Integer> n1 = new NumericArrayList(new Integer[]{12,22,3,45,5,8,10});
+        NumericArrayList.sort(n1);
+        NumericArrayList<Integer> excepted = new NumericArrayList(new Integer[]{3,5,8,10,12,22,45});
+        assertTrue(Arrays.equals(excepted.getArray(),n1.getArray()));
     }
 }
