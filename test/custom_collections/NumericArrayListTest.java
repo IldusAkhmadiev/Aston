@@ -67,4 +67,14 @@ class NumericArrayListTest {
         NumericArrayList<Integer> n1 = new NumericArrayList(new Integer[]{1,2,3,4,5,8,10});
         assertEquals(7, n1.size());
     }
+
+    @Test
+    void createWithOtherArrayList() {
+        ArrayList<Integer> integers = new ArrayList<Integer>();
+        integers.add(111);
+        integers.add(222);
+        integers.add(333);
+        NumericArrayList<Integer> n1 = new NumericArrayList<>(integers);
+        assertEquals(3, n1.size());
+    }
 }

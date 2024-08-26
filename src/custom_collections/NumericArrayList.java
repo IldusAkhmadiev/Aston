@@ -2,8 +2,10 @@ package custom_collections;
 
 import java.lang.reflect.Array;
 import java.util.Collection;
+import java.util.Iterator;
 
 public class NumericArrayList<T extends Number> implements CRUDCollection<T> {
+
 
     private int currentSize;
     private int basicSize = 10;
@@ -19,6 +21,22 @@ public class NumericArrayList<T extends Number> implements CRUDCollection<T> {
         this.data = (T[]) Array.newInstance(clazz, basicSize);
 
     }
+
+    public NumericArrayList(Collection<? extends T> c) {
+        this.currentSize = c.size();
+        if (currentSize > 0) {
+            Class<?> clazz = c.iterator().next().getClass();
+            this.data = (T[]) Array.newInstance(clazz, currentSize);
+            int i = 0;
+            for (T element : c) {
+                this.data[i++] = element;
+            }
+        } else {
+            this.data = (T[]) new Number[basicSize];
+        }
+    }
+
+
 
     @Override
     public void add(T o) {
