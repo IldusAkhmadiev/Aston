@@ -3,8 +3,7 @@ package custom_collections;
 import java.lang.reflect.Array;
 import java.util.*;
 
-public class NumericArrayList<T extends Number> implements CRUDCollection<T> {
-
+public class NumericArrayList<T extends Number & Comparable<T>> implements CRUDCollection<T> {
 
     private int currentSize;
     private int basicSize = 10;
@@ -15,13 +14,13 @@ public class NumericArrayList<T extends Number> implements CRUDCollection<T> {
     public NumericArrayList(T[] data) {
         this.data = data;
         this.currentSize = data.length;
-        if(data.length > 0) {
+        if (data.length > 0) {
             Class<?> clazz = data.getClass();
             this.classType = clazz.getSimpleName();
         }
     }
 
-    public NumericArrayList(Class<T> clazz  ) {
+    public NumericArrayList(Class<T> clazz) {
         this.data = (T[]) Array.newInstance(clazz, basicSize);
         this.classType = clazz.getSimpleName();
 
@@ -63,22 +62,22 @@ public class NumericArrayList<T extends Number> implements CRUDCollection<T> {
         currentSize--;
         // 3 4 5 9 22 > 3 4 null 9 22
         for (int i = 0; i < currentSize; i++) {
-            if(data[i] == null) {
+            if (data[i] == null) {
                 T[] newData = (T[]) new Number[currentSize];
                 System.arraycopy(data, 0, newData, 0, newData.length);
-                System.arraycopy(data, i + 1, newData, i, newData.length -1  );
+                System.arraycopy(data, i + 1, newData, i, newData.length - 1);
                 data = newData;
             }
         }
     }
 
     /**
-     * Возвращает по индексу если индекс выходит зза пределы массива возвращает последний элемент
+     * Возвращает по индексу если индекс выходит за пределы массива возвращает последний элемент
      * Если передать отрицательное число то вернет 1 элемент
      */
     @Override
     public T get(int index) {
-        if(index < 0) {
+        if (index < 0) {
             return data[0];
         } else if (index >= currentSize) {
             return data[currentSize - 1];
@@ -87,18 +86,17 @@ public class NumericArrayList<T extends Number> implements CRUDCollection<T> {
         }
 
 
-
     }
 
     @Override
     public void addAll(Collection<? extends T> c) {
-          int newSize = currentSize + c.size();
-          T[] newData = (T[]) new Number[newSize];
-          System.arraycopy(data, 0, newData, 0, currentSize);
-            int index = currentSize;
-            for (T item : c) {
+        int newSize = currentSize + c.size();
+        T[] newData = (T[]) new Number[newSize];
+        System.arraycopy(data, 0, newData, 0, currentSize);
+        int index = currentSize;
+        for (T item : c) {
             newData[index++] = item;
-            }
+        }
 
         this.data = newData;
         this.currentSize = newSize;
@@ -119,13 +117,35 @@ public class NumericArrayList<T extends Number> implements CRUDCollection<T> {
                     list.data[i + 1] = datum;
                     wasSwap = true;
                 }
-                }
-
             }
+
         }
+    }
 
     public T[] getArray() {
         return data;
+    }
+
+    public Optional<T> max(boolean useThreads) {
+        if (useThreads) {
+            Optional<T> max = Arrays.stream(data).parallel().max(Comparator.naturalOrder());
+            return max;
+        } else {
+            Optional<T> max = Arrays.stream(data).max(Comparator.naturalOrder());
+            return max;
+        }
+
+    }
+
+    public Optional<T> min(boolean useThreads) {
+        if (useThreads) {
+            Optional<T> min = Arrays.stream(data).parallel().min(Comparator.naturalOrder());
+            return min;
+        } else {
+            Optional<T> min = Arrays.stream(data).min(Comparator.naturalOrder());
+            return min;
+        }
+
     }
 
 }
