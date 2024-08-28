@@ -85,15 +85,16 @@ public class CollectionUtil {
             }
 
             switch (clazz.getSimpleName()) {
-            case "Float": case "Double":
-                    Double[] doubles = new Double[2];
-                    doubles[0] = Double.MIN_VALUE;
-                    doubles[1] = 0d;
-                    Double[] doubles2 = new Double[2];
-                    doubles2[0] = 0d;
-                    doubles2[1] = Double.MAX_VALUE;
-                    array[0] = doubles;
-                    array[1] = doubles2;
+            case "Float":
+            case "Double":
+                    double step = (allDoubleP - allDoubleN) / count;
+                    for (int i = 0; i < count; i++) {
+                        Double[] doubles = new Double[2];
+                        doubles[0] = allDoubleN + i * step;
+                        doubles[1] = allDoubleN + (i + 1) * step;
+                        array[i] = doubles;
+                    }
+                    break;
             }
 
             return array;
