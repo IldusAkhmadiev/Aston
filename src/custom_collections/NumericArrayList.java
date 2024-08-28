@@ -185,9 +185,6 @@ public class NumericArrayList<T extends Number & Comparable<T>> implements CRUDC
 
     }
 
-    // пока работает только с Integer
-    // да пока он работает только с Integer и не разделяет минусовые значения .
-    // то есть после сортировки пока что у вас пропадут все числа которые имеют отрицательное значение
     public NumericArrayList<T> sortThread(int threadCount) {
         if(threadCount == 1 || threadCount == 0 || threadCount < 0) {
             threadCount = 2;
