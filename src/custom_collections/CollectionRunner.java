@@ -32,6 +32,7 @@ public class CollectionRunner {
         for (Integer i : list4.getArray()) {
             System.out.println(i);
         }
+        System.out.println(Long.MAX_VALUE);
 
     }
 }

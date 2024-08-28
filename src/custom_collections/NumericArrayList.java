@@ -112,7 +112,6 @@ public class NumericArrayList<T extends Number & Comparable<T>> implements CRUDC
         this.currentSize = newSize;
     }
 
-
     public void addAll(NumericArrayList<T> c) {
         if(c.size() == 0) {
             return;
@@ -189,17 +188,9 @@ public class NumericArrayList<T extends Number & Comparable<T>> implements CRUDC
     // то есть после сортировки пока что у вас пропадут все числа которые имеют отрицательное значение
     public NumericArrayList<T> sortPositiveThread() {
         ExecutorService executor = Executors.newCachedThreadPool();
+        int count = 10;
 
-        NumericArrayList<T> integers1 = new NumericArrayList(Integer.class);
-        NumericArrayList<T> integers2 = new NumericArrayList(Integer.class);
-        NumericArrayList<T> integers3 = new NumericArrayList(Integer.class);
-        NumericArrayList<T> integers4 = new NumericArrayList(Integer.class);
-        NumericArrayList<T> integers5 = new NumericArrayList(Integer.class);
-        NumericArrayList<T> integers6 = new NumericArrayList(Integer.class);
-        NumericArrayList<T> integers7 = new NumericArrayList(Integer.class);
-        NumericArrayList<T> integers8 = new NumericArrayList(Integer.class);
-        NumericArrayList<T> integers9 = new NumericArrayList(Integer.class);
-        NumericArrayList<T> integers10 = new NumericArrayList(Integer.class);
+        NumericArrayList[] lists = CollectionUtil.getNumericLists(count, Integer.class);
 
         int[][] ranges = {
                 {0, 9},
@@ -214,36 +205,10 @@ public class NumericArrayList<T extends Number & Comparable<T>> implements CRUDC
                 {1000000000, 2_147_483_647}
         };
 
-        // Передача задачи в потоки
-        executor.submit(() -> { processRange(ranges[0], integers1,data);
-        integers1.sort(integers1);});
-
-        executor.submit(() -> { processRange(ranges[1], integers2,data);
-            integers2.sort(integers2);});
-
-        executor.submit(() -> { processRange(ranges[2], integers3,data);
-            integers3.sort(integers3);});
-
-        executor.submit(() -> { processRange(ranges[3], integers4,data);
-            integers4.sort(integers4);});
-
-        executor.submit(() -> { processRange(ranges[4], integers5,data);
-            integers5.sort(integers5);});
-
-        executor.submit(() -> { processRange(ranges[5], integers6,data);
-            integers6.sort(integers6);});
-
-        executor.submit(() -> { processRange(ranges[6], integers7,data);
-            integers7.sort(integers7);});
-
-        executor.submit(() -> { processRange(ranges[7], integers8,data);
-            integers8.sort(integers8);});
-
-        executor.submit(() -> { processRange(ranges[8], integers9,data);
-            integers9.sort(integers9);});
-
-        executor.submit(() -> { processRange(ranges[9], integers10,data);
-            integers10.sort(integers10);});
+        for (int i = 0; i < count; i++) {
+            int finalI = i;
+            executor.submit(() -> {processRange(ranges[finalI],lists[finalI],data); NumericArrayList.sort(lists[finalI]);});
+        }
         executor.shutdown();
         //ConcurrentModificationException
         //Поток может завершиться раньше и приступить к работе по объединению этот код исправляет это
@@ -253,17 +218,10 @@ public class NumericArrayList<T extends Number & Comparable<T>> implements CRUDC
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-        NumericArrayList<T> list = integers1;
-        list.addAll(integers2);
-        list.addAll(integers3);
-        list.addAll(integers4);
-        list.addAll(integers5);
-        list.addAll(integers6);
-        list.addAll(integers7);
-        list.addAll(integers8);
-        list.addAll(integers9);
-        list.addAll(integers10);
+        NumericArrayList<T> list = lists[0];
+        for (int i = 1; i < count; i++) {
+            list.addAll(lists[i]);
+        }
         return list;
     }
 
