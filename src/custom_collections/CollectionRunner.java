@@ -29,13 +29,10 @@ public class CollectionRunner {
         Integer[] integers = {2, 3, 4, 44, 88, 55};
         NumericArrayList<Integer> list3 = new NumericArrayList<>(integers);
         NumericArrayList<Integer> list4 = list3.sortPositiveThread();
-        Number[] numberArray = list4.getArray();
-        Integer[] array1 = Arrays.stream(numberArray)
-                .map(number -> (Integer)number)
-                .toArray(Integer[]::new);
-        for (Integer i : array1) {
+        for (Integer i : list4.getArray()) {
             System.out.println(i);
         }
+
     }
 }
 

@@ -12,6 +12,7 @@ public class NumericArrayList<T extends Number & Comparable<T>> implements CRUDC
     private int basicSize = 10;
     private T[] data;
     private int multiplier = 2;
+    private Class<?> classType;
 
     public NumericArrayList(NumericArrayList<T> list) {
         this.currentSize = list.currentSize;
@@ -19,20 +20,19 @@ public class NumericArrayList<T extends Number & Comparable<T>> implements CRUDC
         this.multiplier = list.multiplier;
     }
 
-    private String classType;
 
     public NumericArrayList(T[] data) {
         this.data = data;
         this.currentSize = data.length;
         if (data.length > 0) {
-            Class<?> clazz = data.getClass();
-            this.classType = clazz.getSimpleName();
+
+            this.classType = data.getClass();
         }
     }
 
     public NumericArrayList(Class<T> clazz) {
         this.data = (T[]) Array.newInstance(clazz, basicSize);
-        this.classType = clazz.getSimpleName();
+        this.classType = clazz;
 
     }
 
@@ -40,7 +40,7 @@ public class NumericArrayList<T extends Number & Comparable<T>> implements CRUDC
         this.currentSize = c.size();
         if (currentSize > 0) {
             Class<?> clazz = c.iterator().next().getClass();
-            this.classType = clazz.getSimpleName();
+            this.classType = clazz;
             this.data = (T[]) Array.newInstance(clazz, currentSize);
             int i = 0;
             for (T element : c) {
@@ -153,7 +153,10 @@ public class NumericArrayList<T extends Number & Comparable<T>> implements CRUDC
     }
 
     public T[] getArray() {
-        return (T[]) data;
+        T[] array = (T[]) java.lang.reflect.Array.newInstance(classType,currentSize);
+        System.arraycopy(data, 0, array, 0, data.length);
+        return array;
+
     }
 
     public Optional<T> max(boolean useThreads) {
@@ -248,7 +251,7 @@ public class NumericArrayList<T extends Number & Comparable<T>> implements CRUDC
             e.printStackTrace();
         }
 
-        NumericArrayList list = integers1;
+        NumericArrayList<T> list = integers1;
         list.addAll(integers2);
         list.addAll(integers3);
         list.addAll(integers4);

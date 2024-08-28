@@ -86,4 +86,5 @@ class NumericArrayListTest {
         NumericArrayList<Integer> excepted = new NumericArrayList(new Integer[]{3,5,8,10,12,22,45});
         assertTrue(Arrays.equals(excepted.getArray(),n1.getArray()));
     }
+
 }
