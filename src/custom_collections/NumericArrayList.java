@@ -31,6 +31,7 @@ public class NumericArrayList<T extends Number & Comparable<T>> implements CRUDC
     }
 
     public NumericArrayList(Class<T> clazz) {
+        clazz = CollectionUtil.deleteArray(clazz);
         this.data = (T[]) Array.newInstance(clazz, basicSize);
         this.classType = clazz;
 
@@ -152,6 +153,7 @@ public class NumericArrayList<T extends Number & Comparable<T>> implements CRUDC
     }
 
     public T[] getArray() {
+        this.classType = CollectionUtil.deleteArray(classType);
         T[] array = (T[]) java.lang.reflect.Array.newInstance(classType,currentSize);
 
         for (int i = 0; i < array.length; i++) {
@@ -192,9 +194,9 @@ public class NumericArrayList<T extends Number & Comparable<T>> implements CRUDC
         }
         ExecutorService executor = Executors.newCachedThreadPool();
         // получает список листов которые в будущем будут заполнены каждым потоком
-        NumericArrayList[] lists = CollectionUtil.getNumericLists(threadCount, Integer.class);
+        NumericArrayList[] lists = CollectionUtil.getNumericLists(threadCount, classType);
         // создает диапозон для каждого потока
-        Integer[][] ranges = (Integer[][]) CollectionUtil.getRanges(Integer.class, threadCount);
+        Number[][] ranges =  CollectionUtil.getRanges(classType, threadCount);
 
         for (int i = 0; i < threadCount; i++) {
             int finalI = i; // idea трубет final для лямды.
@@ -216,9 +218,9 @@ public class NumericArrayList<T extends Number & Comparable<T>> implements CRUDC
         return list;
     }
 
-    private void processRange(Integer[] range, NumericArrayList<T> list,T[] source) {
+    private void processRange(Number[] range, NumericArrayList<T> list,T[] source) {
         for (int i = 0; i < currentSize; i++) {
-            if(source[i].intValue() > range[0] && source[i].intValue() <= range[1]) {
+            if (source[i].doubleValue() > range[0].doubleValue() && source[i].doubleValue() <= range[1].doubleValue()) {
                 list.add(source[i]);
             }
         }

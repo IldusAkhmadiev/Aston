@@ -1,5 +1,7 @@
 package custom_collections;
 
+import java.lang.reflect.Array;
+
 /**
  *         Самое крутое тут sortThread(50) который принимает количество потоков
  *         Для тестирования производительности используйте класс PerformanceTest
@@ -7,6 +9,14 @@ package custom_collections;
  */
 public class CollectionRunner {
     public static void main(String[] args) {
+
+        Double[] doubles = {2.2, 3.4, 4D,2.5, 44d,2.3, 88d, 55d};
+        NumericArrayList<Double> list5 = new NumericArrayList<>(doubles);
+        NumericArrayList<Double> doubleNumericArrayList = list5.sortThread(10);
+        for (Double d : doubleNumericArrayList.getArray()) {
+            System.out.println(d);
+        }
+
 
         PerformanceTest.main(args);
 
@@ -16,7 +26,7 @@ public class CollectionRunner {
         Integer[] array = FileUtil.getArray();
         NumericArrayList<Integer> list1 = new NumericArrayList<>(array);
         long startTime = System.nanoTime();
-        NumericArrayList<Integer> list = list1.sortThread(50);
+        NumericArrayList<Integer> list = list1.sortThread(10);
         long endTime = System.nanoTime();
         NumericArrayList<Integer> list2 = new NumericArrayList<>(array);
         System.out.println("Мультипотоковая сортировка: " + ( (endTime - startTime) / 1_000_000) +  " миллисекунд");
@@ -34,9 +44,11 @@ public class CollectionRunner {
         for (Integer i : list4.getArray()) {
             System.out.println(i);
         }
+
+        // проверка сортировки
         for (int i = 0; i < list.getArray().length; i++) {
             System.out.println(list.get(i));
-            if(i == 30) {
+            if(i == 10) {
                 break;
             }
         }
