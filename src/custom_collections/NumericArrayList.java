@@ -192,6 +192,9 @@ public class NumericArrayList<T extends Number & Comparable<T>> implements CRUDC
         if(threadCount == 1 || threadCount == 0 || threadCount < 0) {
             threadCount = 2;
         }
+        if(threadCount > this.currentSize) {
+            threadCount = this.currentSize-1;
+        }
         ExecutorService executor = Executors.newCachedThreadPool();
         // получает список листов которые в будущем будут заполнены каждым потоком
         NumericArrayList[] lists = CollectionUtil.getNumericLists(threadCount, classType);
