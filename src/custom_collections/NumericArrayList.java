@@ -186,27 +186,18 @@ public class NumericArrayList<T extends Number & Comparable<T>> implements CRUDC
     // пока работает только с Integer
     // да пока он работает только с Integer и не разделяет минусовые значения .
     // то есть после сортировки пока что у вас пропадут все числа которые имеют отрицательное значение
-    public NumericArrayList<T> sortPositiveThread() {
+    public NumericArrayList<T> sortThread(int threadCount) {
+        if(threadCount == 1 || threadCount == 0 || threadCount < 0) {
+            threadCount = 2;
+        }
         ExecutorService executor = Executors.newCachedThreadPool();
-        int count = 10;
+        // получает список листов которые в будущем будут заполнены каждым потоком
+        NumericArrayList[] lists = CollectionUtil.getNumericLists(threadCount, Integer.class);
+        // создает диапозон для каждого потока
+        Integer[][] ranges = (Integer[][]) CollectionUtil.getRanges(Integer.class, threadCount);
 
-        NumericArrayList[] lists = CollectionUtil.getNumericLists(count, Integer.class);
-
-        int[][] ranges = {
-                {0, 9},
-                {10, 99},
-                {100, 999},
-                {1000, 9999},
-                {10000, 99999},
-                {100000, 999999},
-                {1000000, 9999999},
-                {10000000, 99999999},
-                {100000000, 999999999},
-                {1000000000, 2_147_483_647}
-        };
-
-        for (int i = 0; i < count; i++) {
-            int finalI = i;
+        for (int i = 0; i < threadCount; i++) {
+            int finalI = i; // idea трубет final для лямды.
             executor.submit(() -> {processRange(ranges[finalI],lists[finalI],data); NumericArrayList.sort(lists[finalI]);});
         }
         executor.shutdown();
@@ -219,13 +210,13 @@ public class NumericArrayList<T extends Number & Comparable<T>> implements CRUDC
             e.printStackTrace();
         }
         NumericArrayList<T> list = lists[0];
-        for (int i = 1; i < count; i++) {
+        for (int i = 1; i < threadCount; i++) {
             list.addAll(lists[i]);
         }
         return list;
     }
 
-    private void processRange(int[] range, NumericArrayList<T> list,T[] source) {
+    private void processRange(Integer[] range, NumericArrayList<T> list,T[] source) {
         for (int i = 0; i < currentSize; i++) {
             if(source[i].intValue() > range[0] && source[i].intValue() <= range[1]) {
                 list.add(source[i]);
