@@ -121,11 +121,11 @@ public class NumericArrayList<T extends Number & Comparable<T>> implements CRUDC
         T[] newData = (T[]) new Number[newSize];
         System.arraycopy(data, 0, newData, 0, currentSize);
         int index = currentSize;
-        for (T item : c.getArray()) {
+        for (T t : c.getArray()) {
             if(index == newSize){
                 break;
             }
-            newData[index++] = item;
+            newData[index++] = t;
         }
 
         this.data = newData;
@@ -154,7 +154,10 @@ public class NumericArrayList<T extends Number & Comparable<T>> implements CRUDC
 
     public T[] getArray() {
         T[] array = (T[]) java.lang.reflect.Array.newInstance(classType,currentSize);
-        System.arraycopy(data, 0, array, 0, data.length);
+
+        for (int i = 0; i < array.length; i++) {
+            array[i] = data[i];
+        }
         return array;
 
     }
