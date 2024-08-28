@@ -1,5 +1,7 @@
 package custom_collections;
 
+import java.util.Arrays;
+
 public class CollectionRunner {
     public static void main(String[] args) {
         // Для тестирования производительности используйте класс PerformanceTest
@@ -23,6 +25,17 @@ public class CollectionRunner {
         System.out.println("Обычная сортировка пузырьком : " + ( (endTime - startTime) / 1_000_000) +  " миллисекунд");
         FileUtil.deleteFile();
 
+
+        Integer[] integers = {2, 3, 4, 44, 88, 55};
+        NumericArrayList<Integer> list3 = new NumericArrayList<>(integers);
+        NumericArrayList<Integer> list4 = list3.sortPositiveThread();
+        Number[] numberArray = list4.getArray();
+        Integer[] array1 = Arrays.stream(numberArray)
+                .map(number -> (Integer)number)
+                .toArray(Integer[]::new);
+        for (Integer i : array1) {
+            System.out.println(i);
+        }
     }
 }
 

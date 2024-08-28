@@ -6,12 +6,19 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-public class NumericArrayList<T extends Number & Comparable<T>> implements CRUDCollection<T> {
+public class NumericArrayList<T extends Number & Comparable<T>> implements CRUDCollection<T>{
 
     private int currentSize;
     private int basicSize = 10;
     private T[] data;
     private int multiplier = 2;
+
+    public NumericArrayList(NumericArrayList<T> list) {
+        this.currentSize = list.currentSize;
+        this.data = (T[]) list.data;
+        this.multiplier = list.multiplier;
+    }
+
     private String classType;
 
     public NumericArrayList(T[] data) {
@@ -105,6 +112,26 @@ public class NumericArrayList<T extends Number & Comparable<T>> implements CRUDC
         this.currentSize = newSize;
     }
 
+
+    public void addAll(NumericArrayList<T> c) {
+        if(c.size() == 0) {
+            return;
+        }
+        int newSize = currentSize + c.size();
+        T[] newData = (T[]) new Number[newSize];
+        System.arraycopy(data, 0, newData, 0, currentSize);
+        int index = currentSize;
+        for (T item : c.getArray()) {
+            if(index == newSize){
+                break;
+            }
+            newData[index++] = item;
+        }
+
+        this.data = newData;
+        this.currentSize = newSize;
+    }
+
     public int size() {
         return currentSize;
     }
@@ -126,7 +153,7 @@ public class NumericArrayList<T extends Number & Comparable<T>> implements CRUDC
     }
 
     public T[] getArray() {
-        return data;
+        return (T[]) data;
     }
 
     public Optional<T> max(boolean useThreads) {
@@ -154,20 +181,19 @@ public class NumericArrayList<T extends Number & Comparable<T>> implements CRUDC
     // пока работает только с Integer
     // да пока он работает только с Integer и не разделяет минусовые значения .
     // то есть после сортировки пока что у вас пропадут все числа которые имеют отрицательное значение
-    public NumericArrayList<Integer> sortPositiveThread() {
+    public NumericArrayList<T> sortPositiveThread() {
         ExecutorService executor = Executors.newCachedThreadPool();
 
-
-        ArrayList<Integer> integers1 = new ArrayList<>();
-        ArrayList<Integer> integers2 = new ArrayList<>();
-        ArrayList<Integer> integers3 = new ArrayList<>();
-        ArrayList<Integer> integers4 = new ArrayList<>();
-        ArrayList<Integer> integers5 = new ArrayList<>();
-        ArrayList<Integer> integers6 = new ArrayList<>();
-        ArrayList<Integer> integers7 = new ArrayList<>();
-        ArrayList<Integer> integers8 = new ArrayList<>();
-        ArrayList<Integer> integers9 = new ArrayList<>();
-        ArrayList<Integer> integers10 = new ArrayList<>();
+        NumericArrayList<T> integers1 = new NumericArrayList(Integer.class);
+        NumericArrayList<T> integers2 = new NumericArrayList(Integer.class);
+        NumericArrayList<T> integers3 = new NumericArrayList(Integer.class);
+        NumericArrayList<T> integers4 = new NumericArrayList(Integer.class);
+        NumericArrayList<T> integers5 = new NumericArrayList(Integer.class);
+        NumericArrayList<T> integers6 = new NumericArrayList(Integer.class);
+        NumericArrayList<T> integers7 = new NumericArrayList(Integer.class);
+        NumericArrayList<T> integers8 = new NumericArrayList(Integer.class);
+        NumericArrayList<T> integers9 = new NumericArrayList(Integer.class);
+        NumericArrayList<T> integers10 = new NumericArrayList(Integer.class);
 
         int[][] ranges = {
                 {0, 9},
@@ -184,34 +210,34 @@ public class NumericArrayList<T extends Number & Comparable<T>> implements CRUDC
 
         // Передача задачи в потоки
         executor.submit(() -> { processRange(ranges[0], integers1,data);
-        integers1.sort(Comparator.naturalOrder());});
+        integers1.sort(integers1);});
 
         executor.submit(() -> { processRange(ranges[1], integers2,data);
-            integers2.sort(Comparator.naturalOrder());});
+            integers2.sort(integers2);});
 
         executor.submit(() -> { processRange(ranges[2], integers3,data);
-            integers3.sort(Comparator.naturalOrder());});
+            integers3.sort(integers3);});
 
         executor.submit(() -> { processRange(ranges[3], integers4,data);
-            integers4.sort(Comparator.naturalOrder());});
+            integers4.sort(integers4);});
 
         executor.submit(() -> { processRange(ranges[4], integers5,data);
-            integers5.sort(Comparator.naturalOrder());});
+            integers5.sort(integers5);});
 
         executor.submit(() -> { processRange(ranges[5], integers6,data);
-            integers6.sort(Comparator.naturalOrder());});
+            integers6.sort(integers6);});
 
         executor.submit(() -> { processRange(ranges[6], integers7,data);
-            integers7.sort(Comparator.naturalOrder());});
+            integers7.sort(integers7);});
 
         executor.submit(() -> { processRange(ranges[7], integers8,data);
-            integers8.sort(Comparator.naturalOrder());});
+            integers8.sort(integers8);});
 
         executor.submit(() -> { processRange(ranges[8], integers9,data);
-            integers9.sort(Comparator.naturalOrder());});
+            integers9.sort(integers9);});
 
         executor.submit(() -> { processRange(ranges[9], integers10,data);
-            integers10.sort(Comparator.naturalOrder());});
+            integers10.sort(integers10);});
         executor.shutdown();
         //ConcurrentModificationException
         //Поток может завершиться раньше и приступить к работе по объединению этот код исправляет это
@@ -222,7 +248,7 @@ public class NumericArrayList<T extends Number & Comparable<T>> implements CRUDC
             e.printStackTrace();
         }
 
-        NumericArrayList list = new NumericArrayList(integers1);
+        NumericArrayList list = integers1;
         list.addAll(integers2);
         list.addAll(integers3);
         list.addAll(integers4);
@@ -235,10 +261,10 @@ public class NumericArrayList<T extends Number & Comparable<T>> implements CRUDC
         return list;
     }
 
-    private void processRange(int[] range, ArrayList<Integer> list,T[] source) {
+    private void processRange(int[] range, NumericArrayList<T> list,T[] source) {
         for (int i = 0; i < currentSize; i++) {
             if(source[i].intValue() > range[0] && source[i].intValue() <= range[1]) {
-                list.add(source[i].intValue());
+                list.add(source[i]);
             }
         }
 
